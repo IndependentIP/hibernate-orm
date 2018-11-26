@@ -3102,18 +3102,25 @@ public abstract class AbstractEntityPersister
 					}
 				}
 
-				if ( useBatch ) {
-					session.getJdbcCoordinator().getBatch( updateBatchKey ).addToBatch();
-					return true;
-				}
-				else {
-					return check(
-							session.getJdbcCoordinator().getResultSetReturn().executeUpdate( update ),
-							id,
-							j,
-							expectation,
-							update
-					);
+				try {
+					if (useBatch) {
+						session.getJdbcCoordinator().getBatch(updateBatchKey).addToBatch();
+						return true;
+					} else {
+						return check(
+								session.getJdbcCoordinator().getResultSetReturn().executeUpdate(update),
+								id,
+								j,
+								expectation,
+								update
+						);
+					}
+				} catch (StaleStateException e) {
+					if ( useVersion && entityMetamodel.getOptimisticLockStyle() == OptimisticLockStyle.VERSION && checkVersion( includeProperty ) ) {
+						LOG.error("Got StaleStateException for " + MessageHelper.infoString(this, id, getFactory()) + " oldVersion = " + oldVersion);
+					}
+
+					throw e;
 				}
 
 			}
