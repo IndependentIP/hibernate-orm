@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import org.hibernate.JDBCException;
+import org.hibernate.StaleStateException;
 import org.hibernate.engine.jdbc.batch.spi.BatchKey;
 import org.hibernate.engine.jdbc.spi.JdbcCoordinator;
 import org.hibernate.internal.CoreMessageLogger;
@@ -53,6 +54,10 @@ public class NonBatchingBatch extends AbstractBatchImpl {
 			}
 			catch (JDBCException e) {
 				abortBatch();
+				throw e;
+			}
+			catch (StaleStateException e) {
+				LOG.error("Got StaleStateException for " + entry.getKey(), e);
 				throw e;
 			}
 		}
