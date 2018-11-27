@@ -135,6 +135,26 @@ xjc {
 }
 
 
+configurations {
+    oneLib
+}
+artifacts {
+    oneLib file("target/libs/hibernate-core-5.1.0.Final.jar")
+}
+apply plugin: 'maven'
+project.tasks.create('uploadOneLib', Upload.class) {
+    configuration = configurations.oneLib
+    repositories {
+        mavenDeployer {
+            repository(url: "http://nexus.fuga.com:8081/repository/maven-releases/") {
+                authentication(userName: "marijn", password: "xxxxxxxx")
+            }
+            pom.version = "5.1.0.Final.Fuga"
+            pom.artifactId = "hibernate-core"
+            pom.groupId = "org.hibernate"
+        }
+    }
+}
 //sourceSets.main.sourceGeneratorsTask.dependsOn xjc
 //sourceSets.main.sourceGeneratorsTask.dependsOn generateGrammarSource
 tasks.compile.dependsOn generateGrammarSource
