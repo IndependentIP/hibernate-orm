@@ -13,6 +13,7 @@ import net.sf.ehcache.Element;
 import net.sf.ehcache.concurrent.CacheLockProvider;
 import net.sf.ehcache.concurrent.LockType;
 import net.sf.ehcache.concurrent.StripedReadWriteLockSync;
+import net.sf.ehcache.concurrent.Sync;
 import net.sf.ehcache.constructs.nonstop.NonStopCacheException;
 
 import org.hibernate.boot.spi.SessionFactoryOptions;
@@ -224,7 +225,10 @@ public class EhcacheTransactionalDataRegion extends EhcacheDataRegion implements
 	 */
 	public final void writeUnlock(Object key) throws CacheException {
 		try {
-			lockProvider.getSyncForKey( key ).unlock( LockType.WRITE );
+			Sync sync = lockProvider.getSyncForKey( key );
+			if ( sync.isHeldByCurrentThread( LockType.WRITE ) ) {
+				sync.unlock( LockType.WRITE );
+			}
 		}
 		catch (net.sf.ehcache.CacheException e) {
 			if ( e instanceof NonStopCacheException ) {
