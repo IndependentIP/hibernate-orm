@@ -212,9 +212,17 @@ class HibernateBuildPlugin implements Plugin<Project> {
 				}
 			}
 			else {
-				gradlePublishingExtension.repositories.maven {
-					name 'jboss-releases-repository'
-					url 'https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/'
+				gradlePublishingExtension.repositories{
+					maven {
+						name 'jboss-releases-repository'
+						url 'https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/'
+					}
+
+					// Credentials are read from Maven's settings.xml for server with <id>Fuga</id>
+					maven {
+						name 'Fuga'
+						url 'http://nexus.fuga.com:8081/repository/maven-releases/'
+					}
 				}
 			}
 		}
