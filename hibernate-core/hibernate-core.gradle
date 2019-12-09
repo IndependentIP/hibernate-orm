@@ -11,6 +11,7 @@ apply plugin: 'antlr'
 apply plugin: 'hibernate-matrix-testing'
 apply plugin: 'org.hibernate.build.gradle.xjc'
 
+version="${version}-Fuga-${versionDetails().gitHash}"
 description = 'Hibernate\'s core ORM functionality'
 
 configurations {

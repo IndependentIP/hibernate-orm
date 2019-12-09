@@ -7,6 +7,7 @@
 
 apply from: rootProject.file( 'gradle/published-java-module.gradle' )
 
+version="${version}-Fuga-${versionDetails().gitHash}"
 description = "Integration for using Ehcache 2.x as a Hibernate second-level-cache provider"
 
 dependencies {
