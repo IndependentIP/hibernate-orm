@@ -29,6 +29,12 @@ publishing {
 			name 'jboss-snapshots-repository'
 			url 'https://repository.jboss.org/nexus/content/repositories/snapshots'
 		}
+
+		// Credentials are read from Maven's settings.xml for server with <id>Fuga</id>
+		maven {
+			name 'Fuga'
+			url 'http://nexus.fuga.com:8081/repository/maven-releases/'
+		}
 	}
 }
 
