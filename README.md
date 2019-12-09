@@ -1,3 +1,7 @@
+**FUGA-related section is below - [Fuga Customizations](#fuga-customizations)**
+
+----
+
 <img src="http://static.jboss.org/hibernate/images/hibernate_logo_whitebkg_200px.png" />
 
 
@@ -149,6 +153,6 @@ file that was set up by the `setDataBase` Gradle task.
 
 # Fuga Customizations
 
-To publish a build to our Nexus:
+To publish an artifact to our Nexus:
   * Make sure you have credentials for `<id>Fuga</id>` in your `~/.m2/settings.xml`
   * Call `./gradlew :<module>:publishPublishedArtifactsPublicationToFugaRepository`
