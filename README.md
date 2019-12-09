@@ -146,3 +146,9 @@ You can do this from the module which you are interested in testing or from the 
 
 Afterward, just pick any test from the IDE and run it as usual. Hibernate will pick the database configuration from the `hibernate.properties`
 file that was set up by the `setDataBase` Gradle task.
+
+# Fuga Customizations
+
+To publish a build to our Nexus:
+  * Make sure you have credentials for `<id>Fuga</id>` in your `~/.m2/settings.xml`
+  * Call `./gradlew :<module>:publishPublishedArtifactsPublicationToFugaRepository`
